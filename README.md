@@ -4,7 +4,6 @@
 [![Docker Automated build](https://img.shields.io/docker/cloud/automated/talsenteam/docker-theia.svg?style=for-the-badge)](//hub.docker.com/r/talsenteam/docker-theia/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/talsenteam/docker-theia.svg?style=for-the-badge)](//hub.docker.com/r/talsenteam/docker-theia/)
 [![Docker Build Status](https://img.shields.io/docker/cloud/build/talsenteam/docker-theia.svg?style=for-the-badge)](//hub.docker.com/r/talsenteam/docker-theia/)
-[![Travis (.org)](https://img.shields.io/travis/talsen-team/docker-app--theia?style=for-the-badge)](//travis-ci.org/talsen-team/docker-app--theia)
 
 The server application theia ready to run inside a docker container.
 
