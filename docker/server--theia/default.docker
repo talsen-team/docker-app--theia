@@ -1,6 +1,8 @@
 FROM theiaide/theia-full:0.10.0
 
 ENV APT_NET_CORE_SOURCE_URL=https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod
+ENV PLUGIN_OMNISHARP_NAME=omnisharp_theia_plugin
+ENV PLUGIN_OMNISHARP_URL=https://github.com/redhat-developer/omnisharp-theia-plugin/releases/download/v0.0.5/omnisharp_theia_plugin.theia
 
 USER root
 
@@ -22,3 +24,26 @@ RUN apt-get update                                                        \
  && apt-get update                                                        \
  && apt-get install -y --no-install-recommends                            \
                    dotnet-sdk-2.2
+
+USER theia
+
+WORKDIR /home/theia
+
+RUN mkdir --parents                             \
+          ./plugins                             \
+ && wget --output-document=/tmp/plugin.theia    \
+         ${PLUGIN_OMNISHARP_URL}                \
+ && unzip /tmp/plugin.theia                     \
+          -d ./plugins/${PLUGIN_OMNISHARP_NAME} \
+ && rm --force                                  \
+       /tmp/plugin.theia
+
+ENTRYPOINT                                  \
+[                                           \
+  "yarn",                                   \
+  "theia",                                  \
+  "start",                                  \
+  "/home/project",                          \
+  "--hostname=0.0.0.0",                     \
+  "--plugins=local-dir:/home/theia/plugins" \
+]
