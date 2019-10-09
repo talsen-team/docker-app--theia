@@ -44,7 +44,7 @@ then
 
     exit 0
 else
-    echo "Error: The workspace name \"${WORKSPACE_NAME}\" is invalid"
+    echo "Error: The workspace name \"${WORKSPACE_NAME}\" is invalid."
 
     exit 1
 fi
