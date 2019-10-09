@@ -15,7 +15,7 @@ SCRIPT_NAME=$( detect_command_name ${0} )
 function print_help() {
     echo "Usage: dojo ${SCRIPT_NAME}"
     print_help_flag_text
-    echo "--> Builds an initialized workspace."
+    echo "--> ${SCRIPT_NAME^}s an initialized workspace."
 }
 
 if [ $( detect_help_flag ${@:1} ) = 1 ];
@@ -38,13 +38,13 @@ then
 fi
 
 WORKSPACE_TEMPLATE_TYPE=$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )
-BUILD_STRATEGY_SCRIPT=/etc/talsen/strategy/${SCRIPT_NAME}/${WORKSPACE_TEMPLATE_TYPE}.bash
+STRATEGY_SCRIPT=/etc/talsen/strategy/${SCRIPT_NAME}/${WORKSPACE_TEMPLATE_TYPE}.bash
 
-if [ ! -f ${BUILD_STRATEGY_SCRIPT} ];
+if [ ! -f ${STRATEGY_SCRIPT} ];
 then
-    echo "Error: Build for workspaces based on a \"${WORKSPACE_TEMPLATE_TYPE}\" template is not supported."
+    echo "Error: ${SCRIPT_NAME^} for workspaces based on a \"${WORKSPACE_TEMPLATE_TYPE}\" template is not supported."
 
     exit 1
 fi
 
-/bin/bash ${BUILD_STRATEGY_SCRIPT}
+/bin/bash ${STRATEGY_SCRIPT}
