@@ -6,6 +6,10 @@ source /etc/talsen/util/detect-command-name.bash
 source /etc/talsen/util/detect-help-flag.bash
 source /etc/talsen/util/print-help-flag-text.bash
 
+source /etc/talsen/util/indicator/workspace-indicator.bash
+source /etc/talsen/util/indicator/workspace-raw-name-indicator.bash
+source /etc/talsen/util/indicator/workspace-template-indicator.bash
+
 ASSET_CPP_TEMPLATE=/etc/talsen/assets/cpp-template
 
 PWD=$( pwd )
@@ -23,10 +27,6 @@ then
 
     exit 0
 fi
-
-WORKSPACE_INDICATOR=.workspace
-WORKSPACE_RAW_NAME_INDICATOR=.workspace/.raw-name
-WORKSPACE_TEMPLATE_INDICATOR=.workspace/.template
 
 if [ ! -d ${WORKSPACE_INDICATOR} ];
 then

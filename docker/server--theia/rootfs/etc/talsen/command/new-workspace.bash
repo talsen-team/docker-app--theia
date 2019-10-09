@@ -6,6 +6,8 @@ source /etc/talsen/util/detect-command-name.bash
 source /etc/talsen/util/detect-help-flag.bash
 source /etc/talsen/util/print-help-flag-text.bash
 
+source /etc/talsen/util/indicator/workspace-raw-name-indicator.bash
+
 ASSET_NEW_WORKSPACE=/etc/talsen/assets/new-workspace
 
 SCRIPT_NAME=$( detect_command_name ${0} )
@@ -40,7 +42,7 @@ then
        ${ASSET_NEW_WORKSPACE} \
        ${WORKSPACE_DIR}
 
-    echo ${WORKSPACE_NAME} > ${WORKSPACE_DIR}/.workspace/.raw-name
+    echo ${WORKSPACE_NAME} > ${WORKSPACE_DIR}/${WORKSPACE_RAW_NAME_INDICATOR}
 
     echo "--> A new empty workspace has been created at \"${WORKSPACE_DIR}\"."
     echo "    Open it in theia to proceed."
