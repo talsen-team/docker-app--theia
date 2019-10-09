@@ -31,13 +31,19 @@ fi
 if [ ! -d ${WORKSPACE_INDICATOR} ];
 then
     echo "Error: \"${PWD}\" is not a workspace directory."
+
+    exit 1
 elif [ -f ${WORKSPACE_TEMPLATE_INDICATOR} ];
 then
     echo "Error: Workspace \"$( cat ${WORKSPACE_RAW_NAME_INDICATOR} )\" is already initialized as \"$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )\" workspace."
+
+    exit 1
 else
     rsync --archive              \
           ${ASSET_CPP_TEMPLATE}/ \
           .
 
     echo "--> Workspace has been initialized with \"$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )\" template."
+
+    exit 0
 fi
