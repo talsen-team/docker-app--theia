@@ -36,8 +36,12 @@ then
     echo "Error: Another workspace at \"${WORKSPACE_DIR}\" already exists."
 
     exit 1
-elif [[ ${WORKSPACE_NAME} =~ ^[-_0-9a-zA-Z]+$ ]]
+elif [[ ! ${WORKSPACE_NAME} =~ ^[-_0-9a-zA-Z]+$ ]]
 then
+    echo "Error: The workspace name \"${WORKSPACE_NAME}\" is invalid."
+
+    exit 1
+else
     cp --archive              \
        ${ASSET_NEW_WORKSPACE} \
        ${WORKSPACE_DIR}
@@ -48,8 +52,4 @@ then
     echo "    Open it in theia to proceed."
 
     exit 0
-else
-    echo "Error: The workspace name \"${WORKSPACE_NAME}\" is invalid."
-
-    exit 1
 fi
