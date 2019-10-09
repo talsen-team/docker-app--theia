@@ -27,7 +27,12 @@ fi
 WORKSPACE_NAME=${1}
 WORKSPACE_DIR=/home/project/${WORKSPACE_NAME_PREFIX}-${WORKSPACE_NAME}
 
-if [[ ${WORKSPACE_NAME} =~ ^[-_0-9a-zA-Z]+$ ]]
+if [ -d ${WORKSPACE_DIR} ];
+then
+    echo "Error: Another workspace at \"${WORKSPACE_DIR}\" already exists."
+
+    exit 1
+elif [[ ${WORKSPACE_NAME} =~ ^[-_0-9a-zA-Z]+$ ]]
 then
     cp --archive              \
        ${ASSET_NEW_WORKSPACE} \
