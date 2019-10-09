@@ -3,6 +3,7 @@
 set -euo pipefail
 
 source /etc/talsen/util/detect-command-name.bash
+source /etc/talsen/util/detect-help-flag.bash
 
 ASSET_NEW_WORKSPACE=/etc/talsen/assets/new-workspace
 
@@ -16,7 +17,7 @@ function print_help() {
     echo "--> Creates a new empty dojo workspace."
 }
 
-if [ ${#} = 0 ];
+if [[ ${#} = 0 ]] || [[ $( detect_help_flag ${@:1} ) = 1 ]];
 then
     print_help
 

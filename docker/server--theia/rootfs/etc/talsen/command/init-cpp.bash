@@ -3,6 +3,7 @@
 set -euo pipefail
 
 source /etc/talsen/util/detect-command-name.bash
+source /etc/talsen/util/detect-help-flag.bash
 
 ASSET_CPP_TEMPLATE=/etc/talsen/assets/cpp-template
 
@@ -14,7 +15,7 @@ function print_help() {
     echo "--> Initializes an empty workspace with the C++ template."
 }
 
-if [ ${#} = 0 ];
+if [ $( detect_help_flag ${@:1} ) = 1 ];
 then
     print_help
 
