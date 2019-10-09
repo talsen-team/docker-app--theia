@@ -4,6 +4,7 @@ set -euo pipefail
 
 source /etc/talsen/util/detect-command-name.bash
 source /etc/talsen/util/detect-help-flag.bash
+source /etc/talsen/util/print-help-flag-text.bash
 
 ASSET_CPP_TEMPLATE=/etc/talsen/assets/cpp-template
 
@@ -12,6 +13,7 @@ SCRIPT_NAME=$( detect_command_name ${0} )
 
 function print_help() {
     echo "Usage: dojo ${SCRIPT_NAME}"
+    print_help_flag_text
     echo "--> Initializes an empty workspace with the C++ template."
 }
 

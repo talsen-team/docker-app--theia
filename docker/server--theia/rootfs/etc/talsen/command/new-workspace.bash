@@ -4,6 +4,7 @@ set -euo pipefail
 
 source /etc/talsen/util/detect-command-name.bash
 source /etc/talsen/util/detect-help-flag.bash
+source /etc/talsen/util/print-help-flag-text.bash
 
 ASSET_NEW_WORKSPACE=/etc/talsen/assets/new-workspace
 
@@ -14,6 +15,7 @@ function print_help() {
     echo "Usage: dojo ${SCRIPT_NAME} <name>"
     echo "  <name>: Will have the current date prepended, the full name"
     echo "          looks like the following: \"${WORKSPACE_NAME_PREFIX}-<name>\""
+    print_help_flag_text
     echo "--> Creates a new empty dojo workspace."
 }
 
