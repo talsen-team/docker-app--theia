@@ -2,12 +2,8 @@
 
 set -euo pipefail
 
-source /etc/talsen/util/detect-script-dir.bash
-
-DOJO_DIR=$( detect_script_dir ${BASH_SOURCE[0]} )
-
 function print_help() {
-    local COMMAND_DIR=${DOJO_DIR}/command
+    local COMMAND_DIR=/etc/talsen/command
 
     for COMMAND in $( cd ${COMMAND_DIR} && ls *.bash )
     do
@@ -18,7 +14,7 @@ function print_help() {
 }
 
 function invoke_command() {
-    local COMMAND_SCRIPT=${DOJO_DIR}/command/${1}.bash
+    local COMMAND_SCRIPT=/etc/talsen/command/${1}.bash
 
     if [ ! -f ${COMMAND_SCRIPT} ];
     then

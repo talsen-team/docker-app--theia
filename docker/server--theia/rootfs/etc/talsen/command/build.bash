@@ -35,6 +35,16 @@ then
     echo "Error: Workspace \"$( cat ${WORKSPACE_RAW_NAME_INDICATOR} )\" is not initialized yet."
 
     exit 1
-else
-    exit 0
 fi
+
+WORKSPACE_TEMPLATE_TYPE=$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )
+BUILD_STRATEGY_SCRIPT=/etc/talsen/strategy/${SCRIPT_NAME}/${WORKSPACE_TEMPLATE_TYPE}.bash
+
+if [ ! -f ${BUILD_STRATEGY_SCRIPT} ];
+then
+    echo "Error: Build for workspaces based on a \"${WORKSPACE_TEMPLATE_TYPE}\" template is not supported."
+
+    exit 1
+fi
+
+/bin/bash ${BUILD_STRATEGY_SCRIPT}

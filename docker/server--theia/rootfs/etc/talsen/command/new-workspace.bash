@@ -41,15 +41,13 @@ then
     echo "Error: The workspace name \"${WORKSPACE_NAME}\" is invalid."
 
     exit 1
-else
-    cp --archive              \
-       ${ASSET_NEW_WORKSPACE} \
-       ${WORKSPACE_DIR}
-
-    echo ${WORKSPACE_NAME} > ${WORKSPACE_DIR}/${WORKSPACE_RAW_NAME_INDICATOR}
-
-    echo "--> A new empty workspace has been created at \"${WORKSPACE_DIR}\"."
-    echo "    Open it in theia to proceed."
-
-    exit 0
 fi
+
+cp --archive               \
+    ${ASSET_NEW_WORKSPACE} \
+    ${WORKSPACE_DIR}
+
+echo ${WORKSPACE_NAME} > ${WORKSPACE_DIR}/${WORKSPACE_RAW_NAME_INDICATOR}
+
+echo "--> A new empty workspace has been created at \"${WORKSPACE_DIR}\"."
+echo "    Open it in theia to proceed."
