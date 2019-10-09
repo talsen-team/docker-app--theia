@@ -12,6 +12,8 @@ function print_help() {
     for COMMAND in $( cd ${COMMAND_DIR} && ls *.bash )
     do
         /bin/bash ${COMMAND_DIR}/${COMMAND}
+
+        echo ""
     done
 }
 

@@ -14,7 +14,6 @@ function print_help() {
     echo "  <name>: Will have the current date prepended, the full name"
     echo "          looks like the following: \"${WORKSPACE_NAME_PREFIX}-<name>\""
     echo "--> Creates a new empty dojo workspace."
-    echo ""
 }
 
 if [ ${#} = 0 ];
