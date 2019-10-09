@@ -4,6 +4,8 @@ set -euo pipefail
 
 source /etc/talsen/util/detect-command-name.bash
 
+ASSET_NEW_WORKSPACE=/etc/talsen/assets/new-workspace
+
 SCRIPT_NAME=$( detect_command_name ${0} )
 WORKSPACE_NAME_PREFIX=$( date +%F )
 
@@ -27,8 +29,11 @@ WORKSPACE_DIR=/home/project/${WORKSPACE_NAME_PREFIX}-${WORKSPACE_NAME}
 
 if [[ ${WORKSPACE_NAME} =~ ^[-_0-9a-zA-Z]+$ ]]
 then
-    mkdir --parents        \
-          ${WORKSPACE_DIR}
+    cp --archive              \
+       ${ASSET_NEW_WORKSPACE} \
+       ${WORKSPACE_DIR}
+
+    echo ${WORKSPACE_NAME} > ${WORKSPACE_DIR}/.workspace/.raw-name
 
     echo "--> A new empty workspace has been created at \"${WORKSPACE_DIR}\"."
     echo "    Open it in theia to proceed."
