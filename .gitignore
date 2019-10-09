@@ -6,6 +6,8 @@
 !bash-util
 !docker/
 !docker/server--theia/
+!docker/server--theia/rootfs/
+!docker/server--theia/rootfs/**
 !docker/server--theia/default.docker
 !docker-compose/
 !docker-compose/server--theia/

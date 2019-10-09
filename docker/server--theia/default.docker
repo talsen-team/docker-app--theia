@@ -38,6 +38,9 @@ RUN mkdir --parents                             \
  && rm --force                                  \
        /tmp/plugin.theia
 
+COPY ./rootfs/ \
+             /
+
 ENTRYPOINT                                  \
 [                                           \
   "yarn",                                   \
