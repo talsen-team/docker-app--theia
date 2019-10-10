@@ -8,6 +8,8 @@
 !docker/server--theia/
 !docker/server--theia/rootfs/
 !docker/server--theia/rootfs/**
+!docker/server--theia/rootfs-build/
+!docker/server--theia/rootfs-build/**
 !docker/server--theia/default.docker
 !docker-compose/
 !docker-compose/server--theia/
