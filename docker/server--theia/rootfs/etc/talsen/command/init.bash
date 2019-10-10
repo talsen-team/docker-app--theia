@@ -10,18 +10,26 @@ source /etc/talsen/util/indicator/workspace-indicator.bash
 source /etc/talsen/util/indicator/workspace-raw-name-indicator.bash
 source /etc/talsen/util/indicator/workspace-template-indicator.bash
 
-ASSET_CSHARP_TEMPLATE=/etc/talsen/assets/csharp-template
-
 PWD=$( pwd )
 SCRIPT_NAME=$( detect_command_name ${0} )
 
+TEMPLATES=""
+for TEMPLATE in $( find /etc/talsen/assets/ -maxdepth 1 -name *-template -type d -printf '%f ' | xargs echo )
+do
+    TEMPLATE="${TEMPLATE/-template/}"
+    TEMPLATES="'${TEMPLATE}', ${TEMPLATES}"
+done
+TEMPLATES="${TEMPLATES::-2}"
+
 function print_help() {
-    echo "Usage: dojo ${SCRIPT_NAME}"
+    echo "Usage: dojo ${SCRIPT_NAME} <template>"
+    echo "  <template>: Type of template to use, supported values are:"
+    echo "              ${TEMPLATES}"
     print_help_flag_text
-    echo "--> Initializes an empty workspace with the C# template."
+    echo "--> Initializes an empty workspace with a specific template."
 }
 
-if [ $( detect_help_flag ${@:1} ) = 1 ];
+if [[ ${#} = 0 ]] || [[ $( detect_help_flag ${@:1} ) = 1 ]];
 then
     print_help
 
@@ -40,8 +48,19 @@ then
     exit 1
 fi
 
-rsync --archive                \
-        ${ASSET_CSHARP_TEMPLATE}/ \
+TEMPLATE_TYPE=${1}
+
+ASSET_X_TEMPLATE=/etc/talsen/assets/${TEMPLATE_TYPE}-template
+
+if [ ! -d ${ASSET_X_TEMPLATE} ];
+then
+    echo "Error: Template \"${TEMPLATE_TYPE}\" is not known."
+
+    exit 1
+fi
+
+rsync --archive              \
+        ${ASSET_X_TEMPLATE}/ \
         .
 
 echo "--> Workspace has been initialized with \"$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )\" template."
