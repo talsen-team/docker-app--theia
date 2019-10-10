@@ -79,6 +79,13 @@ RUN wget --output-document=/tmp/gunit.tar.gz     \
  && rm --force --recursive                       \
        /tmp/gunit
 
+RUN ln --symbolic                                                          \
+       /etc/talsen/assets/cpp-template/.workspace/.gunit/lib/include/gmock \
+       /usr/local/include/gmock                                            \
+ && ln --symbolic                                                          \
+       /etc/talsen/assets/cpp-template/.workspace/.gunit/lib/include/gtest \
+       /usr/local/include/gtest
+
 COPY ./rootfs/ \
              /
 
