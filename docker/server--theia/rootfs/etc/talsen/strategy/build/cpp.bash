@@ -8,7 +8,7 @@ TARGET_NAME=run-workspace
 
 if [ ! -d ${BUILD_DIR} ];
 then
-    echo "" \
+    cat .workspace/.meson-options \
     > meson_options.txt
     echo "option( 'exe_name', type : 'string', value : '${TARGET_NAME}' )" \
     >> meson_options.txt
