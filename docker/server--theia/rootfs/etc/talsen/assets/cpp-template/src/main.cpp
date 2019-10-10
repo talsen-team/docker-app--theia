@@ -1,11 +1,8 @@
 
-#include <iostream>
+#include <gtest/gtest.h>
 
 int main( int a_argc, char** a_argv )
 {
-    ::std::cout << "Hello, world!"
-                << ::std::endl
-                ;
-
-    return EXIT_SUCCESS;
+    ::testing::InitGoogleTest(&a_argc, a_argv);
+    return RUN_ALL_TESTS();
 }
