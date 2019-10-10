@@ -7,6 +7,7 @@ cpp_compiler = meson.get_compiler('cpp')
 
 opt_exe_name = get_option( 'exe_name' )
 opt_gunit_lib_dir = get_option( 'gunit_lib_dir' )
+opt_sources = get_option( 'sources' )
 
 deps = [
     dependency( 'threads' ),
@@ -20,6 +21,6 @@ sources = [
 ]
 
 executable( opt_exe_name,
-            sources,
+            opt_sources,
             dependencies :  deps,
             include_directories : includes )

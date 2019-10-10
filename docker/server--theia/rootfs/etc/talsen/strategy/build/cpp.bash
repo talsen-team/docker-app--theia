@@ -11,11 +11,19 @@ TARGET_NAME=run-workspace
 
 if [ ! -d ${BUILD_DIR} ];
 then
+    SOURCES=""
+    for SOURCE in $( find . -name *.cpp -printf '%P ' | xargs echo )
+    do
+        SOURCES="'${SOURCE}', ${SOURCES}"
+    done
+
     cat ${WORKSPACE_MESON_OPTIONS_INDICATOR} \
     > meson_options.txt
     echo "option( 'exe_name', type : 'string', value : '${TARGET_NAME}' )" \
     >> meson_options.txt
     echo "option( 'gunit_lib_dir', type : 'string', value : '$( pwd )/${WORKSPACE_GUNIT_LIB_INDICATOR}' )" \
+    >> meson_options.txt
+    echo "option( 'sources', type : 'array', value : [ ${SOURCES} ] )" \
     >> meson_options.txt
 
     meson ${BUILD_DIR}
