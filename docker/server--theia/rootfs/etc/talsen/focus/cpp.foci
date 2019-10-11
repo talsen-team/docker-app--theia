@@ -1,4 +1,5 @@
 coverage
 coverage-strict
 implementation
+implementation-strict
 thread-sanitizer
