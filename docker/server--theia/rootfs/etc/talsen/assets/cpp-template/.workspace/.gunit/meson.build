@@ -8,6 +8,7 @@ cpp_compiler = meson.get_compiler('cpp')
 opt_exe_name = get_option( 'exe_name' )
 opt_gunit_lib_dir = get_option( 'gunit_lib_dir' )
 opt_sources = get_option( 'sources' )
+opt_cpp_flags_default = get_option( 'x_cpp_flags_default' )
 
 deps = [
     dependency( 'threads' ),
@@ -22,5 +23,8 @@ sources = [
 
 executable( opt_exe_name,
             opt_sources,
+            cpp_args : opt_cpp_flags_default,
             dependencies :  deps,
-            include_directories : includes )
+            include_directories : includes,
+            link_args : opt_cpp_flags_default,
+            )

@@ -1,0 +1,6 @@
+-Wall
+-Wconversion
+-Werror
+-Wextra
+-Wold-style-cast
+-pedantic-errors
