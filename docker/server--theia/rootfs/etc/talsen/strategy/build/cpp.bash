@@ -66,6 +66,10 @@ cd ${BUILD_DIR}
 
 echo ""
 
+ninja reconfigure
+
+echo ""
+
 ninja
 
 echo ""
