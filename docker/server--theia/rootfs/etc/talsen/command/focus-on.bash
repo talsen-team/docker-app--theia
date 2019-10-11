@@ -6,18 +6,22 @@ source /etc/talsen/util/detect-command-name.bash
 source /etc/talsen/util/detect-help-flag.bash
 source /etc/talsen/util/print-help-flag-text.bash
 
-SCRIPT_NAME=$( detect_command_name ${0} )
+source /etc/talsen/util/indicator/workspace-build-focus-indicator.bash
+source /etc/talsen/util/indicator/workspace-indicator.bash
+source /etc/talsen/util/indicator/workspace-name-indicator.bash
+source /etc/talsen/util/indicator/workspace-template-indicator.bash
 
-FOCI=""
-for FOCUS in $( find /etc/talsen/focus/ -maxdepth 1 -name *.foci -type f -printf '%f ' | xargs echo )
-do
-    FOCI="${FOCI}${FOCUS} "
-done
-FOCI="${FOCI}"
+SCRIPT_NAME=$( detect_command_name ${0} )
 
 function print_help() {
     echo "Usage: dojo ${SCRIPT_NAME} <focus>"
     echo "  <focus>: The focus to set, supported foci are:"
+
+    FOCI=""
+    for FOCUS in $( find /etc/talsen/focus/ -maxdepth 1 -name *.foci -type f -printf '%f ' | xargs echo )
+    do
+        FOCI="${FOCI}${FOCUS} "
+    done
 
     for FOCUS in ${FOCI}
     do
@@ -26,16 +30,67 @@ function print_help() {
         do
             FOCI_FOR="${FOCI_FOR}${FOCUS_FOR} "
         done <<< $( cat /etc/talsen/focus/${FOCUS} )
-    echo "           ${FOCUS/.foci/}: ${FOCI_FOR}"
+        echo "           ${FOCUS/.foci/}: ${FOCI_FOR}"
     done
 
     print_help_flag_text
     echo "--> Sets a new focus for the workspace build."
 }
 
-if [ $( detect_help_flag ${@:1} ) = 1 ];
+if [[ ${#} = 0 ]] || [[ $( detect_help_flag ${@:1} ) = 1 ]];
 then
     print_help
 
     exit 0
+fi
+
+if [ ! -d ${WORKSPACE_INDICATOR} ];
+then
+    echo "Error: \"${PWD}\" is not a workspace directory."
+
+    exit 1
+elif [ ! -f ${WORKSPACE_TEMPLATE_INDICATOR} ];
+then
+    echo "Error: Workspace \"$( cat ${WORKSPACE_NAME_INDICATOR} )\" is not initialized yet."
+
+    exit 1
+fi
+
+WORKSPACE_TEMPLATE_TYPE=$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )
+FOCI_LIST=/etc/talsen/focus/${WORKSPACE_TEMPLATE_TYPE}.foci
+
+if [ ! -f ${FOCI_LIST} ];
+then
+    echo "Error: Build foci for workspaces based on a \"${WORKSPACE_TEMPLATE_TYPE}\" template are not supported."
+
+    exit 1
+fi
+
+DESIRED_FOCUS=${1}
+
+IS_FOCUS_SUPPORTED="false"
+while IFS= read -r CURRENT_FOCUS
+do
+    if [ "${DESIRED_FOCUS}" = "${CURRENT_FOCUS}" ];
+    then
+        IS_FOCUS_SUPPORTED="true"
+    fi
+done <<< $( cat ${FOCI_LIST} )
+
+if [ "${IS_FOCUS_SUPPORTED}" = "false" ];
+then
+    echo "Error: The focus \"${DESIRED_FOCUS}\" for workspaces based on a \"${WORKSPACE_TEMPLATE_TYPE}\" template is not supported."
+
+    exit 1
+fi
+
+OLD_FOCUS=$( cat ${WORKSPACE_BUILD_FOCUS_INDICATOR} )
+
+if [ "${OLD_FOCUS}" = "${DESIRED_FOCUS}" ];
+then
+    echo "--> Build focus is already \"${DESIRED_FOCUS}\"."
+else
+    echo ${DESIRED_FOCUS} > ${WORKSPACE_BUILD_FOCUS_INDICATOR}
+
+    echo "--> Build focus has been changed from \"${OLD_FOCUS}\" to \"${DESIRED_FOCUS}\"."
 fi
