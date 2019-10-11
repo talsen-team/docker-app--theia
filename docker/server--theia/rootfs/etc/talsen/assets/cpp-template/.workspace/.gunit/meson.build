@@ -7,7 +7,6 @@ cpp_compiler = meson.get_compiler('cpp')
 
 opt_exe_name = get_option( 'exe_name' )
 opt_gunit_lib_dir = get_option( 'gunit_lib_dir' )
-opt_sources = get_option( 'sources' )
 opt_cpp_flags_default = get_option( 'x_cpp_flags_default' )
 opt_cpp_flags_focus = get_option( 'x_cpp_flags_focus' )
 
@@ -19,13 +18,13 @@ deps = [
 includes = include_directories( 'src' )
 
 sources = [
-    'src/main.cpp',
+# sources
 ]
 
 cpp_args = opt_cpp_flags_default + opt_cpp_flags_focus
 
 executable( opt_exe_name,
-            opt_sources,
+            sources,
             cpp_args : cpp_args,
             dependencies :  deps,
             include_directories : includes,

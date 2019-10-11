@@ -4,6 +4,7 @@ set -euo pipefail
 
 source /etc/talsen/util/indicator/workspace-build-focus.bash
 source /etc/talsen/util/indicator/workspace-gunit-lib.bash
+source /etc/talsen/util/indicator/workspace-gunit-meson-build.bash
 source /etc/talsen/util/indicator/workspace-meson-options.bash
 source /etc/talsen/util/indicator/workspace-cpp-flags-default.bash
 
@@ -13,6 +14,27 @@ PWD=$( pwd )
 TARGET_NAME=run-workspace
 
 source /etc/talsen/util/indicator/workspace-cpp-flags-${BUILD_FOCUS}.bash
+
+SOURCES=""
+for SOURCE in $( find . -name *.cpp -printf '%P ' | xargs echo )
+do
+    SOURCES="'${SOURCE}', ${SOURCES}"
+done
+if (( ${#SOURCES} > 1 ));
+then
+    SOURCES="${SOURCES::-2}"
+fi
+
+echo "" > meson.build
+while IFS= read -r LINE
+do
+    if [ "${LINE}" = "# sources" ];
+    then
+        echo "${SOURCES}" >> meson.build
+    else
+        echo "${LINE}" >> meson.build
+    fi
+done <<< $( cat ${WORKSPACE_GUNIT_MESON_BUILD_INDICATOR} )
 
 if [ ! -d ${BUILD_DIR} ];
 then
@@ -36,23 +58,11 @@ then
         CPP_FLAGS_FOCUS="${CPP_FLAGS_FOCUS::-2}"
     fi
 
-    SOURCES=""
-    for SOURCE in $( find . -name *.cpp -printf '%P ' | xargs echo )
-    do
-        SOURCES="'${SOURCE}', ${SOURCES}"
-    done
-    if (( ${#SOURCES} > 1 ));
-    then
-        SOURCES="${SOURCES::-2}"
-    fi
-
     cat ${WORKSPACE_MESON_OPTIONS_INDICATOR} \
     > meson_options.txt
     echo "option( 'exe_name', type : 'string', value : '${TARGET_NAME}' )" \
     >> meson_options.txt
     echo "option( 'gunit_lib_dir', type : 'string', value : '$( pwd )/${WORKSPACE_GUNIT_LIB_INDICATOR}' )" \
-    >> meson_options.txt
-    echo "option( 'sources', type : 'array', value : [ ${SOURCES} ] )" \
     >> meson_options.txt
     echo "option( 'x_cpp_flags_default', type : 'array', value : [ ${CPP_FLAGS_DEFAULT} ] )" \
     >> meson_options.txt
@@ -63,10 +73,6 @@ then
 fi
 
 cd ${BUILD_DIR}
-
-echo ""
-
-ninja reconfigure
 
 echo ""
 
