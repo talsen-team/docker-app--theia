@@ -29,5 +29,5 @@ executable( opt_exe_name,
             cpp_args : cpp_args,
             dependencies :  deps,
             include_directories : includes,
-            link_args : opt_cpp_flags_default,
+            link_args : cpp_args,
             )
