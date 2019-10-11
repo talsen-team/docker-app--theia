@@ -4,7 +4,7 @@ set -euo pipefail
 
 source /etc/talsen/util/indicator/workspace-gunit-lib-indicator.bash
 source /etc/talsen/util/indicator/workspace-meson-options-indicator.bash
-WORKSPACE_CPP_FLAGS_DEFAULT_INDICATOR=.workspace/.cpp-flags.default
+source /etc/talsen/util/indicator/workspace-cpp-flags-default-indicator.bash
 
 BUILD_DIR=.build
 PWD=$( pwd )
