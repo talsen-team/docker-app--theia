@@ -6,10 +6,10 @@ source /etc/talsen/util/detect-command-name.bash
 source /etc/talsen/util/detect-help-flag.bash
 source /etc/talsen/util/print-help-flag-text.bash
 
-source /etc/talsen/util/indicator/workspace-build-focus-indicator.bash
-source /etc/talsen/util/indicator/workspace-indicator.bash
-source /etc/talsen/util/indicator/workspace-name-indicator.bash
-source /etc/talsen/util/indicator/workspace-template-indicator.bash
+source /etc/talsen/util/indicator/workspace-build-focus.bash
+source /etc/talsen/util/indicator/workspace.bash
+source /etc/talsen/util/indicator/workspace-name.bash
+source /etc/talsen/util/indicator/workspace-template.bash
 
 SCRIPT_NAME=$( detect_command_name ${0} )
 

@@ -6,7 +6,7 @@ source /etc/talsen/util/detect-command-name.bash
 source /etc/talsen/util/detect-help-flag.bash
 source /etc/talsen/util/print-help-flag-text.bash
 
-source /etc/talsen/util/indicator/workspace-name-indicator.bash
+source /etc/talsen/util/indicator/workspace-name.bash
 
 ASSET_NEW_WORKSPACE=/etc/talsen/assets/new-workspace
 

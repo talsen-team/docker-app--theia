@@ -2,17 +2,17 @@
 
 set -euo pipefail
 
-source /etc/talsen/util/indicator/workspace-build-focus-indicator.bash
-source /etc/talsen/util/indicator/workspace-gunit-lib-indicator.bash
-source /etc/talsen/util/indicator/workspace-meson-options-indicator.bash
-source /etc/talsen/util/indicator/workspace-cpp-flags-default-indicator.bash
+source /etc/talsen/util/indicator/workspace-build-focus.bash
+source /etc/talsen/util/indicator/workspace-gunit-lib.bash
+source /etc/talsen/util/indicator/workspace-meson-options.bash
+source /etc/talsen/util/indicator/workspace-cpp-flags-default.bash
 
 BUILD_DIR=.build
 BUILD_FOCUS=$( cat ${WORKSPACE_BUILD_FOCUS_INDICATOR} )
 PWD=$( pwd )
 TARGET_NAME=run-workspace
 
-source /etc/talsen/util/indicator/workspace-cpp-flags-${BUILD_FOCUS}-indicator.bash
+source /etc/talsen/util/indicator/workspace-cpp-flags-${BUILD_FOCUS}.bash
 
 if [ ! -d ${BUILD_DIR} ];
 then
