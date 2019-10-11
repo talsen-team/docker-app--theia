@@ -23,7 +23,7 @@ TEMPLATES="${TEMPLATES::-2}"
 
 function print_help() {
     echo "Usage: dojo ${SCRIPT_NAME} <template>"
-    echo "  <template>: Type of template to use, supported values are:"
+    echo "  <template>: Type of template to use, supported templates are:"
     echo "              ${TEMPLATES}"
     print_help_flag_text
     echo "--> Initializes an empty workspace with a specific template."
