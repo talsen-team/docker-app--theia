@@ -2,7 +2,5 @@
 
 set -euo pipefail
 
-rm --force --recursive \
-   src/{bin,obj}
-
+source /etc/talsen/strategy/clean/csharp.bash
 source /etc/talsen/strategy/build/csharp.bash

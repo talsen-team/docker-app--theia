@@ -2,9 +2,5 @@
 
 set -euo pipefail
 
-BUILD_DIR=.build
-
-rm --force --recursive \
-   ${BUILD_DIR}
-
+source /etc/talsen/strategy/clean/cpp.bash
 source /etc/talsen/strategy/build/cpp.bash
