@@ -94,3 +94,10 @@ else
 
     echo "--> Build focus has been changed from \"${OLD_FOCUS}\" to \"${DESIRED_FOCUS}\"."
 fi
+
+CLEAN_SCRIPT=/etc/talsen/strategy/clean/${WORKSPACE_TEMPLATE_TYPE}.bash
+
+if [ -f ${CLEAN_SCRIPT} ];
+then
+    source ${CLEAN_SCRIPT}
+fi
