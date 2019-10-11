@@ -7,7 +7,7 @@ source /etc/talsen/util/detect-help-flag.bash
 source /etc/talsen/util/print-help-flag-text.bash
 
 source /etc/talsen/util/indicator/workspace-indicator.bash
-source /etc/talsen/util/indicator/workspace-raw-name-indicator.bash
+source /etc/talsen/util/indicator/workspace-name-indicator.bash
 source /etc/talsen/util/indicator/workspace-template-indicator.bash
 
 PWD=$( pwd )
@@ -43,7 +43,7 @@ then
     exit 1
 elif [ -f ${WORKSPACE_TEMPLATE_INDICATOR} ];
 then
-    echo "Error: Workspace \"$( cat ${WORKSPACE_RAW_NAME_INDICATOR} )\" is already initialized as \"$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )\" workspace."
+    echo "Error: Workspace \"$( cat ${WORKSPACE_NAME_INDICATOR} )\" is already initialized as \"$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )\" workspace."
 
     exit 1
 fi
