@@ -59,8 +59,6 @@ then
     exit 1
 fi
 
-rsync --archive              \
-        ${ASSET_X_TEMPLATE}/ \
-        .
+STRATEGY_SCRIPT=/etc/talsen/strategy/${SCRIPT_NAME}/${TEMPLATE_TYPE}.bash
 
-echo "--> Workspace has been initialized with \"$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )\" template."
+source ${STRATEGY_SCRIPT}
