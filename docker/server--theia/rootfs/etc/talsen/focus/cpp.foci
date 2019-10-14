@@ -1,5 +1,5 @@
-coverage
-coverage-strict
 implementation
 implementation-strict
+metrics
+metrics-strict
 thread-sanitizer
