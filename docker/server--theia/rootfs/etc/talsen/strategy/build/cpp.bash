@@ -11,7 +11,7 @@ source /etc/talsen/util/indicator/workspace-cpp-flags-default.bash
 
 BUILD_DIR=.build
 BUILD_FOCUS=$( cat ${WORKSPACE_BUILD_FOCUS_INDICATOR} )
-PWD=$( pwd )
+PROJECT_DIR=$( pwd )
 TARGET_NAME=run-workspace
 
 source /etc/talsen/util/indicator/workspace-cpp-flags-${BUILD_FOCUS}.bash
@@ -83,4 +83,17 @@ echo ""
 
 ./${TARGET_NAME}
 
-cd ${PWD}
+POST_TEST_SCRIPT=/etc/talsen/strategy/build/cpp/${BUILD_FOCUS}/post-test.bash
+
+if [ -f ${POST_TEST_SCRIPT} ];
+then
+    cd ${PROJECT_DIR}
+
+    echo ""
+
+    source ${POST_TEST_SCRIPT}
+
+    cd ${BUILD_DIR}
+fi
+
+cd ${PROJECT_DIR}

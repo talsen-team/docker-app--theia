@@ -86,6 +86,10 @@ RUN ln --symbolic                                                          \
        /etc/talsen/assets/cpp-template/.workspace/.gunit/lib/include/gtest \
        /usr/local/include/gtest
 
+RUN apt-get update                             \
+ && apt-get install -y --no-install-recommends \
+                    lcov
+
 COPY ./rootfs/ \
              /
 
