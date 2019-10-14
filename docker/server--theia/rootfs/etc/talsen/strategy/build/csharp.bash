@@ -10,8 +10,11 @@ fi
 
 set +e
 
-dotnet test /p:CollectCoverage=true &> .test-output
+mkdir --parents \
+      .build
 
-cat .test-output
+dotnet test /p:CollectCoverage=true &> .build/.test-output
+
+cat .build/.test-output
 
 set -e
