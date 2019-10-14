@@ -16,7 +16,7 @@ SCRIPT_NAME=$( detect_command_name ${0} )
 function print_help() {
     echo "Usage: dojo ${SCRIPT_NAME}"
     print_help_flag_text
-    echo "--> Retrieves the currently used workspace focus."
+    echo "--> Displays the currently used workspace focus."
 }
 
 if [ $( detect_help_flag ${@:1} ) = 1 ];
@@ -43,11 +43,11 @@ FOCI_LIST=/etc/talsen/focus/${WORKSPACE_TEMPLATE_TYPE}.foci
 
 if [ ! -f ${FOCI_LIST} ];
 then
-    echo "Error: Build foci for workspaces based on a \"${WORKSPACE_TEMPLATE_TYPE}\" template are not supported."
+    echo "Error: Workspace foci for workspaces based on a \"${WORKSPACE_TEMPLATE_TYPE}\" template are not supported."
 
     exit 1
 fi
 
 CURRENT_FOCUS=$( cat ${WORKSPACE_BUILD_FOCUS_INDICATOR} )
 
-echo "--> Current build focus is \"${CURRENT_FOCUS}\"."
+echo "--> Current workspace focus is \"${CURRENT_FOCUS}\"."

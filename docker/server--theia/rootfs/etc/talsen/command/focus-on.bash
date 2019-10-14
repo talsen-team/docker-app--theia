@@ -34,7 +34,7 @@ function print_help() {
     done
 
     print_help_flag_text
-    echo "--> Sets a new focus for the workspace build."
+    echo "--> Sets a new focus for the workspace."
 }
 
 if [[ ${#} = 0 ]] || [[ $( detect_help_flag ${@:1} ) = 1 ]];
@@ -61,7 +61,7 @@ FOCI_LIST=/etc/talsen/focus/${WORKSPACE_TEMPLATE_TYPE}.foci
 
 if [ ! -f ${FOCI_LIST} ];
 then
-    echo "Error: Build foci for workspaces based on a \"${WORKSPACE_TEMPLATE_TYPE}\" template are not supported."
+    echo "Error: Workspace foci for workspaces based on a \"${WORKSPACE_TEMPLATE_TYPE}\" template are not supported."
 
     exit 1
 fi
@@ -88,11 +88,11 @@ OLD_FOCUS=$( cat ${WORKSPACE_BUILD_FOCUS_INDICATOR} )
 
 if [ "${OLD_FOCUS}" = "${DESIRED_FOCUS}" ];
 then
-    echo "--> Build focus is already \"${DESIRED_FOCUS}\"."
+    echo "--> Workspace focus is already \"${DESIRED_FOCUS}\"."
 else
     echo ${DESIRED_FOCUS} > ${WORKSPACE_BUILD_FOCUS_INDICATOR}
 
-    echo "--> Build focus has been changed from \"${OLD_FOCUS}\" to \"${DESIRED_FOCUS}\"."
+    echo "--> Workspace focus has been changed from \"${OLD_FOCUS}\" to \"${DESIRED_FOCUS}\"."
 fi
 
 CLEAN_SCRIPT=/etc/talsen/strategy/clean/${WORKSPACE_TEMPLATE_TYPE}.bash
