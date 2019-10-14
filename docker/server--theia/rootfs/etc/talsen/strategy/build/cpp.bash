@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+source /etc/talsen/util/indicator/workspace.bash
 source /etc/talsen/util/indicator/workspace-build-focus.bash
 source /etc/talsen/util/indicator/workspace-gunit-lib.bash
 source /etc/talsen/util/indicator/workspace-gunit-meson-build.bash
@@ -16,7 +17,7 @@ TARGET_NAME=run-workspace
 source /etc/talsen/util/indicator/workspace-cpp-flags-${BUILD_FOCUS}.bash
 
 SOURCES=""
-for SOURCE in $( find . -name *.cpp -printf '%P ' | xargs echo )
+for SOURCE in $( find . -path ./${WORKSPACE_INDICATOR} -prune -o -name *.cpp -printf '%P ' | xargs echo )
 do
     SOURCES="'${SOURCE}', ${SOURCES}"
 done
