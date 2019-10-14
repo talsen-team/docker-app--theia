@@ -1,0 +1,125 @@
+@startuml
+
+skinparam monochrome reverse
+skinparam classAttributeIconSize 0
+
+enum product {
+    none
+    chocolate
+    chips
+}
+
+class observable<T> {
+    - observers: observer[]
+    + operator=(v: T)
+    + operator*()
+    + subscribe(o: observer)
+    + unsubscribe_all()
+}
+
+note left of observable
+    operator=()
+    {
+        ...
+        for (auto& observer : observers)
+        {
+            observer.update()
+        }
+    }
+end note
+
+interface observer {
+    update(): void <<virtual>>
+}
+
+class vending_machine_data {
+    + chosen_product: observable<product> = none
+    + coin_count: observable<int> = 0
+}
+
+class vending_machine {
+    + vending_machine(d: vending_machine_data = {}, states: vending_machine_state[])
+    + insert_coin(): void
+    + eject(): void
+    + choose_product(p: product): void
+    + add_state(): int
+    + connect_states<VendingMachineTransition>(from_state_id: int, to_state_id: int)
+    - data: vending_machine_data
+    - set_state(vending_machine_state): void
+    - active_state: vending_machine_state
+    - states: vending_machine_state[]
+}
+
+abstract class vending_machine_transition {
+    + target_state(): vending_machine_state
+    + set_target_state(s: vending_machine_state): void
+    + update(d: vending_machine_data): bool
+    # should_trigger(d: vending_machine_data): bool <<virtual>>
+    # trigger(): void <<virtual>>
+    - target_state: vending_machine_state
+}
+
+class eject_transition extends vending_machine_transition {
+    # should_trigger(d: vending_machine_data): bool <<override>>
+    # trigger(): void <<override>>
+    '+ target_state: vending_machine_state <<final>> = ready_state
+}
+
+class dispense_transition extends vending_machine_transition {
+    # should_trigger(d: vending_machine_data): bool <<override>>
+    # trigger(): void <<override>>
+    '+ target_state: vending_machine_state <<final>> = ready_state
+}
+
+class choose_product_transition extends vending_machine_transition {
+    # should_trigger(d: vending_machine_data): bool <<override>>
+    # trigger(): void <<override>>
+    '+ target_state: vending_machine_state <<final>> = product_chosen_state
+}
+
+note left of vending_machine_transition
+    bool update(vending_machine_data data)
+    {
+        if (should_trigger(data))
+        {
+            trigger();
+            return true;
+        }
+
+        return false;
+    }
+end note
+
+class vending_machine_state implements observer {
+    - machine: vending_machine
+    - transitions: vending_machine_transition[]
+    + add_transition(t: transition): void
+    + vending_machine_state() <<create>>
+    + update(): void <<override>>
+}
+
+vending_machine --> vending_machine_state : <<friend>>
+
+object ready_state <<singleton>> {
+     transitions = [choose_product_transition]
+}
+
+object product_chosen_state <<singleton>> {  
+    transitions = [dispense_transition, eject_transition]
+}
+
+vending_machine_state <.. product_chosen_state : <<instance>>
+vending_machine_state <.. ready_state : <<instance>>
+
+note right of vending_machine_state 
+    void update()
+    {
+        for (auto& transition : transitions)
+        {
+            if (transition.update(machine.data));
+                machine.set_state(transition.target_state);
+        }
+    }
+end note
+
+@enduml
