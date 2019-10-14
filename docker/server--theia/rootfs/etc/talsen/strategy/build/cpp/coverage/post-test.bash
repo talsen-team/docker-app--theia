@@ -5,7 +5,7 @@ set -euo pipefail
 GLOBIGNORE="*" # prevent expansion of wildcards link '/usr/include/*' or similar
 
 BUILD_DIR=.build
-COVERAGE_DIR=${BUILD_DIR}/coveragereport
+COVERAGE_DIR=.coverage
 COVERAGE_FILE=${BUILD_DIR}/meson-logs/coverage.info
 TEMP_COVERAGE_DIR=${BUILD_DIR}/meson-logs/coveragereport
 TEMP_COVERAGE_FILE=${BUILD_DIR}/meson-logs/coverage-temp.info
