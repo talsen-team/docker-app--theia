@@ -2,18 +2,22 @@ FROM theiaide/theia-full:0.10.0
 
 ENV APT_NET_CORE_SOURCE_URL=https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod
 ENV PLUGIN_OMNISHARP_NAME=omnisharp_theia_plugin
-ENV PLUGIN_OMNISHARP_URL=https://github.com/redhat-developer/omnisharp-theia-plugin/releases/download/v0.0.5/omnisharp_theia_plugin.theia
+ENV PLUGIN_OMNISHARP_VERSION=v0.0.5
+ENV PLUGIN_OMNISHARP_URL=https://github.com/redhat-developer/omnisharp-theia-plugin/releases/download/${PLUGIN_OMNISHARP_VERSION}/omnisharp_theia_plugin.theia
 
 USER root
 
 RUN apt-get update                                                        \
  && apt-get install -y --no-install-recommends                            \
+                    apt-transport-https                                   \
+                    cccc                                                  \
                     cmake                                                 \
                     gnupg                                                 \
-                    apt-transport-https                                   \
-                    software-properties-common                            \
+                    lcov                                                  \
                     meson                                                 \
                     ninja-build                                           \
+                    rsync                                                 \
+                    software-properties-common                            \
  && add-apt-repository universe --yes                                     \
  && apt-key adv --keyserver packages.microsoft.com                        \
                 --recv-keys EB3E94ADBE1229CF                              \
@@ -40,60 +44,53 @@ RUN mkdir --parents                             \
 
 USER root
 
-RUN apt-get update                             \
- && apt-get install -y --no-install-recommends \
-                    cccc                       \
-                    lcov                       \
-                    rsync
-
 ENV LIB_GUNIT_VERSION=1.10.0
 ENV LIB_GUNIT_SRC_URL=https://github.com/google/googletest/archive/release-${LIB_GUNIT_VERSION}.tar.gz
 
 ENV TALSEN_ASSETS_DIR=/etc/talsen/assets
-ENV TALSEN_ASSET_CPP_GUNIT_TEMPLATE_DIR=${TALSEN_ASSETS_DIR}/cpp-template/.workspace/.gunit/lib
+ENV TALSEN_ASSET_CPP_GUNIT_LIB_DIR=${TALSEN_ASSETS_DIR}/cpp-template/.workspace/.gunit/lib
 ENV TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR=${TALSEN_ASSETS_DIR}/cheat-sheets/.gunit
 
 COPY ./rootfs-build/tmp/gunit \
                    /tmp/gunit
 
-RUN wget --output-document=/tmp/gunit.tar.gz        \
-         ${LIB_GUNIT_SRC_URL}                       \
- && tar --directory=/tmp/gunit                      \
-        --file=/tmp/gunit.tar.gz                    \
-        --extract                                   \
-        --ungzip                                    \
-        --strip-components=1                        \
-        --verbose                                   \
- && rm --force                                      \
-       /tmp/gunit.tar.gz                            \
- && /bin/bash /tmp/gunit/build.bash                 \
- && mkdir --parents                                 \
-          ${TALSEN_ASSET_CPP_GUNIT_TEMPLATE_DIR}    \
- && rsync --archive                                 \
-          --info=progress2                          \
-          --stats                                   \
-          /tmp/gunit/include                        \
-          ${TALSEN_ASSET_CPP_GUNIT_TEMPLATE_DIR}    \
- && rsync --archive                                 \
-          --info=progress2                          \
-          --stats                                   \
-          /tmp/gunit/build/libgunit.so              \
-          ${TALSEN_ASSET_CPP_GUNIT_TEMPLATE_DIR}    \
- && mkdir --parents                                 \
-          ${TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR} \
- && rsync --archive                                 \
-          --info=progress2                          \
-          --stats                                   \
-          /tmp/gunit/googlemock/docs/cheat_sheet.md \
-          ${TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR} \
- && rm --force --recursive                          \
-       /tmp/gunit
-
-RUN ln --symbolic                                                          \
-       /etc/talsen/assets/cpp-template/.workspace/.gunit/lib/include/gmock \
-       /usr/local/include/gmock                                            \
- && ln --symbolic                                                          \
-       /etc/talsen/assets/cpp-template/.workspace/.gunit/lib/include/gtest \
+RUN wget --output-document=/tmp/gunit.tar.gz           \
+         ${LIB_GUNIT_SRC_URL}                          \
+ && tar --directory=/tmp/gunit                         \
+        --file=/tmp/gunit.tar.gz                       \
+        --extract                                      \
+        --ungzip                                       \
+        --strip-components=1                           \
+        --verbose                                      \
+ && rm --force                                         \
+       /tmp/gunit.tar.gz                               \
+ && /bin/bash /tmp/gunit/build.bash                    \
+ && mkdir --parents                                    \
+          ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}            \
+ && rsync --archive                                    \
+          --info=progress2                             \
+          --stats                                      \
+          /tmp/gunit/include                           \
+          ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}            \
+ && rsync --archive                                    \
+          --info=progress2                             \
+          --stats                                      \
+          /tmp/gunit/build/libgunit.so                 \
+          ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}            \
+ && mkdir --parents                                    \
+          ${TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR}    \
+ && rsync --archive                                    \
+          --info=progress2                             \
+          --stats                                      \
+          /tmp/gunit/googlemock/docs/cheat_sheet.md    \
+          ${TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR}    \
+ && rm --force --recursive                             \
+       /tmp/gunit                                      \
+ && ln --symbolic                                      \
+       ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}/include/gmock \
+       /usr/local/include/gmock                        \
+ && ln --symbolic                                      \
+       ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}/include/gtest \
        /usr/local/include/gtest
 
 COPY ./rootfs/ \
