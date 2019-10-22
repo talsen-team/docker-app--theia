@@ -8,6 +8,8 @@ then
     exit 1
 fi
 
+echo "--> The terminal may hang for a few seconds until the build is done."
+
 set +e
 
 mkdir --parents \
