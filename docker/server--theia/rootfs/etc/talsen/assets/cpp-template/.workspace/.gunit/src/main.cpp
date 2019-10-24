@@ -1,4 +1,8 @@
 
+/*
+ * Do not impement logic here.
+ */
+
 #include <gtest/gtest.h>
 
 int main( int a_argc, char** a_argv )
