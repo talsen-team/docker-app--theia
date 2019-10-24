@@ -98,12 +98,4 @@ COPY ./rootfs/ \
 
 USER theia
 
-ENTRYPOINT                                  \
-[                                           \
-  "yarn",                                   \
-  "theia",                                  \
-  "start",                                  \
-  "/home/project",                          \
-  "--hostname=0.0.0.0",                     \
-  "--plugins=local-dir:/home/theia/plugins" \
-]
+ENTRYPOINT [ "/bin/bash", "/opt/entrypoint.bash" ]
