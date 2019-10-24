@@ -82,7 +82,7 @@ RUN wget --output-document=/tmp/gunit.tar.gz           \
  && rsync --archive                                    \
           --info=progress2                             \
           --stats                                      \
-          /tmp/gunit/googlemock/docs/cheat_sheet.md    \
+          /tmp/gunit/googlemock/docs/*.md              \
           ${TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR}    \
  && rm --force --recursive                             \
        /tmp/gunit                                      \
