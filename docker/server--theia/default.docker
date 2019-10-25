@@ -54,43 +54,48 @@ ENV TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR=${TALSEN_ASSETS_DIR}/cheat-sheets/.gu
 COPY ./rootfs-build/tmp/gunit \
                    /tmp/gunit
 
-RUN wget --output-document=/tmp/gunit.tar.gz           \
-         ${LIB_GUNIT_SRC_URL}                          \
- && tar --directory=/tmp/gunit                         \
-        --file=/tmp/gunit.tar.gz                       \
-        --extract                                      \
-        --ungzip                                       \
-        --strip-components=1                           \
-        --verbose                                      \
- && rm --force                                         \
-       /tmp/gunit.tar.gz                               \
- && /bin/bash /tmp/gunit/build.bash                    \
- && mkdir --parents                                    \
-          ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}            \
- && rsync --archive                                    \
-          --info=progress2                             \
-          --stats                                      \
-          /tmp/gunit/include                           \
-          ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}            \
- && rsync --archive                                    \
-          --info=progress2                             \
-          --stats                                      \
-          /tmp/gunit/build/libgunit.so                 \
-          ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}            \
- && mkdir --parents                                    \
-          ${TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR}    \
- && rsync --archive                                    \
-          --info=progress2                             \
-          --stats                                      \
-          /tmp/gunit/googlemock/docs/*.md              \
-          ${TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR}    \
- && rm --force --recursive                             \
-       /tmp/gunit                                      \
- && ln --symbolic                                      \
-       ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}/include/gmock \
-       /usr/local/include/gmock                        \
- && ln --symbolic                                      \
-       ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}/include/gtest \
+RUN wget --output-document=/tmp/gunit.tar.gz              \
+         ${LIB_GUNIT_SRC_URL}                             \
+ && tar --directory=/tmp/gunit                            \
+        --file=/tmp/gunit.tar.gz                          \
+        --extract                                         \
+        --ungzip                                          \
+        --strip-components=1                              \
+        --verbose                                         \
+ && rm --force                                            \
+       /tmp/gunit.tar.gz                                  \
+ && /bin/bash /tmp/gunit/build.bash                       \
+ && mkdir --parents                                       \
+          ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}               \
+ && rsync --archive                                       \
+          --info=progress2                                \
+          --stats                                         \
+          /tmp/gunit/include                              \
+          ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}               \
+ && rsync --archive                                       \
+          --info=progress2                                \
+          --stats                                         \
+          /tmp/gunit/build/libgunit.so                    \
+          ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}               \
+ && mkdir --parents                                       \
+          ${TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR}       \
+ && rsync --archive                                       \
+          --info=progress2                                \
+          --stats                                         \
+          /tmp/gunit/googlemock/docs/*.md                 \
+          ${TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR}/gmock \
+ && rsync --archive                                       \
+          --info=progress2                                \
+          --stats                                         \
+          /tmp/gunit/googletest/docs/*.md                 \
+          ${TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR}/gtest \
+ && rm --force --recursive                                \
+       /tmp/gunit                                         \
+ && ln --symbolic                                         \
+       ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}/include/gmock    \
+       /usr/local/include/gmock                           \
+ && ln --symbolic                                         \
+       ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}/include/gtest    \
        /usr/local/include/gtest
 
 COPY ./rootfs/ \
