@@ -2,13 +2,8 @@
 
 set -euo pipefail
 
-HOME_DIR=/home/theia
 PROJECT_DIR=/home/project
 PLUGINS_DIR=/home/theia/plugins
-
-sudo chown --recursive \
-           theia:theia \
-           ${HOME_DIR}
 
 sudo chown --recursive    \
            theia:theia    \
