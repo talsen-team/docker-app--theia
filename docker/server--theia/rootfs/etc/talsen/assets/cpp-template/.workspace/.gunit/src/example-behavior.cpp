@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-TEST( DummyTest, should_always_fail )
+TEST( ExampleBehavior, should_always_fail )
 {
     // Arrange
 
