@@ -12,6 +12,6 @@ yarn
 
 set +e
 
-yarn jest
+yarn test
 
 set -e
