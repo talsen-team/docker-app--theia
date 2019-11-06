@@ -6,7 +6,7 @@ services:
       context:      './../../docker/server--theia'
       dockerfile:   'default.docker'
     container_name: 'server--theia'
-    image:          'talsenteam/docker-theia:v0.11.0'
+    image:          'talsenteam/docker-theia:v0.12.0'
     ports:
       -             '80:3000'
     restart:        'no'
