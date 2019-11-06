@@ -14,4 +14,4 @@ rsync --archive                          \
         ${PLANTUML_CHEAT_SHEET_TEMPLATE} \
         ${CHEAT_SHEET_TARGET}
 
-echo "--> Cheat sheets for \"$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )\" template have been imported to \"${CHEAT_SHEET_TARGET}\"."
+echo "--> Cheat sheets for \"plantuml\" template have been imported to \"${CHEAT_SHEET_TARGET}\"."
