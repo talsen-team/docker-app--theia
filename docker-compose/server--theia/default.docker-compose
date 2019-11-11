@@ -1,14 +1,22 @@
-version: '3'
+version:              '3'
 
 services:
   server--theia:
     build:
-      context:      './../../docker/server--theia'
-      dockerfile:   'default.docker'
-    container_name: 'server--theia'
-    image:          'talsenteam/docker-theia:v0.10.0'
+      context:        './../../docker/server--theia'
+      dockerfile:     'default.docker'
+    container_name:   'server--theia'
+    deploy:
+      resources:
+        limits:
+          cpus:       '0.75'
+          memory:     '1G'
+        reservations:
+          cpus:       '0.10'
+          memory:     '500M'
+    image:            'talsenteam/docker-theia:v0.10.0'
     ports:
-      -             '80:3000'
-    restart:        'no'
+      -               '80:3000'
+    restart:          'no'
     volumes:
-      -             '${HOST_PATH_TO_VOLUMES_ROOT}/server--theia/home/project:/home/project'
+      -               '${HOST_PATH_TO_VOLUMES_ROOT}/server--theia/home/project:/home/project'
