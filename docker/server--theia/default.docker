@@ -1,4 +1,4 @@
-FROM theiaide/theia-full:0.10.0
+FROM theiaide/theia-full:0.15.0
 
 ENV APT_NET_CORE_SOURCE_URL=https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod
 ENV PLUGIN_OMNISHARP_NAME=omnisharp_theia_plugin
