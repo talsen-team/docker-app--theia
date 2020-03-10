@@ -1,4 +1,4 @@
-FROM theiaide/theia-full:0.15.0
+FROM theiaide/theia-full:0.16.1
 
 ENV APT_NET_CORE_SOURCE_URL=https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod
 ENV PLUGIN_OMNISHARP_NAME=omnisharp_theia_plugin
@@ -12,10 +12,12 @@ RUN apt-get update                                                        \
                     apt-transport-https                                   \
                     cccc                                                  \
                     cmake                                                 \
+                    gcovr                                                 \
                     gnupg                                                 \
                     lcov                                                  \
                     meson                                                 \
                     ninja-build                                           \
+                    ruby                                                  \
                     rsync                                                 \
                     software-properties-common                            \
  && add-apt-repository universe --yes                                     \
@@ -27,7 +29,8 @@ RUN apt-get update                                                        \
             > /etc/apt/sources.list.d/dotnetdev.list'                     \
  && apt-get update                                                        \
  && apt-get install -y --no-install-recommends                            \
-                   dotnet-sdk-2.2
+                   dotnet-sdk-2.2                                         \
+ && gem install ceedling
 
 USER theia
 
@@ -47,9 +50,19 @@ USER root
 ENV LIB_GUNIT_VERSION=1.10.0
 ENV LIB_GUNIT_SRC_URL=https://github.com/google/googletest/archive/release-${LIB_GUNIT_VERSION}.tar.gz
 
+ENV LIB_CEEDLING_VERSION=v0.29.1
+ENV LIB_CEEDLING_SRC_URL=https://github.com/ThrowTheSwitch/Ceedling/archive/${LIB_CEEDLING_VERSION}.tar.gz
+
+ENV LIB_UNITY_VERSION=v2.5.0
+ENV LIB_UNITY_SRC_URL=https://github.com/ThrowTheSwitch/Unity/archive/${LIB_UNITY_VERSION}.tar.gz
+
+ENV LIB_CMOCK_VERSION=v2.5.0
+ENV LIB_CMOCK_SRC_URL=https://github.com/ThrowTheSwitch/CMock/archive/${LIB_CMOCK_VERSION}.tar.gz
+
 ENV TALSEN_ASSETS_DIR=/etc/talsen/assets
 ENV TALSEN_ASSET_CPP_GUNIT_LIB_DIR=${TALSEN_ASSETS_DIR}/cpp-template/.workspace/.gunit/lib
 ENV TALSEN_ASSET_CPP_GUNIT_CHEAT_SHEET_DIR=${TALSEN_ASSETS_DIR}/cheat-sheets/.gunit
+ENV TALSEN_ASSET_C_CEEDLING_CHEAT_SHEET_DIR=${TALSEN_ASSETS_DIR}/cheat-sheets/.ceedling
 
 COPY ./rootfs-build/tmp/gunit \
                    /tmp/gunit
@@ -96,7 +109,64 @@ RUN wget --output-document=/tmp/gunit.tar.gz              \
        /usr/local/include/gmock                           \
  && ln --symbolic                                         \
        ${TALSEN_ASSET_CPP_GUNIT_LIB_DIR}/include/gtest    \
-       /usr/local/include/gtest
+       /usr/local/include/gtest                           \
+ && wget --output-document=/tmp/ceedling.tar.gz           \
+         ${LIB_CEEDLING_SRC_URL}                          \
+ && mkdir --parents                                       \
+          /tmp/ceedling                                   \
+ && tar --directory=/tmp/ceedling                         \
+        --file=/tmp/ceedling.tar.gz                       \
+        --extract                                         \
+        --ungzip                                          \
+        --strip-components=1                              \
+        --verbose                                         \
+ && rm --force                                            \
+       /tmp/ceedling.tar.gz                               \
+ && wget --output-document=/tmp/unity.tar.gz              \
+         ${LIB_UNITY_SRC_URL}                             \
+ && mkdir --parents                                       \
+          /tmp/unity                                      \
+ && tar --directory=/tmp/unity                            \
+        --file=/tmp/unity.tar.gz                          \
+        --extract                                         \
+        --ungzip                                          \
+        --strip-components=1                              \
+        --verbose                                         \
+ && rm --force                                            \
+       /tmp/unity.tar.gz                                  \
+ && wget --output-document=/tmp/cmock.tar.gz              \
+         ${LIB_CMOCK_SRC_URL}                             \
+ && mkdir --parents                                       \
+          /tmp/cmock                                      \
+ && tar --directory=/tmp/cmock                            \
+        --file=/tmp/cmock.tar.gz                          \
+        --extract                                         \
+        --ungzip                                          \
+        --strip-components=1                              \
+        --verbose                                         \
+ && rm --force                                            \
+       /tmp/cmock.tar.gz                                  \
+ && mkdir --parents                                       \
+          ${TALSEN_ASSET_C_CEEDLING_CHEAT_SHEET_DIR}      \
+ && rsync --archive                                       \
+          --info=progress2                                \
+          --stats                                         \
+          /tmp/ceedling/docs/CeedlingPacket.md            \
+          ${TALSEN_ASSET_C_CEEDLING_CHEAT_SHEET_DIR}      \
+ && rsync --archive                                       \
+          --info=progress2                                \
+          --stats                                         \
+          /tmp/unity/docs/UnityAssertionsReference.md     \
+          ${TALSEN_ASSET_C_CEEDLING_CHEAT_SHEET_DIR}      \
+ && rsync --archive                                       \
+          --info=progress2                                \
+          --stats                                         \
+          /tmp/cmock/docs/CMock_Summary.md                \
+          ${TALSEN_ASSET_C_CEEDLING_CHEAT_SHEET_DIR}      \
+ && rm --force --recursive                                \
+       /tmp/ceedling                                      \
+       /tmp/unity                                         \
+       /tmp/cmock
 
 COPY ./rootfs/ \
              /
