@@ -8,6 +8,8 @@ source /etc/talsen/util/print-help-flag-text.bash
 
 source /etc/talsen/util/indicator/workspace-name.bash
 
+source /etc/talsen/config/workspace-base-url.bash
+
 ASSET_NEW_WORKSPACE=/etc/talsen/assets/new-workspace
 
 SCRIPT_NAME=$( detect_command_name ${0} )
@@ -30,10 +32,11 @@ fi
 
 WORKSPACE_NAME=${1}
 WORKSPACE_DIR=/home/project/${WORKSPACE_NAME}-${WORKSPACE_NAME_SUFFIX}
+WORKSPACE_URL=${WORKSPACE_BASE_URL}/${WORKSPACE_NAME}-${WORKSPACE_NAME_SUFFIX}
 
 if [ -d ${WORKSPACE_DIR} ];
 then
-    echo "Error: Another workspace at \"${WORKSPACE_DIR}\" already exists."
+    echo "Error: Another workspace at \"${WORKSPACE_URL}\" already exists."
 
     exit 1
 elif [[ ! ${WORKSPACE_NAME} =~ ^[-_0-9a-zA-Z]+$ ]]
@@ -49,5 +52,5 @@ cp --archive               \
 
 echo ${WORKSPACE_NAME} > ${WORKSPACE_DIR}/${WORKSPACE_NAME_INDICATOR}
 
-echo "--> A new empty workspace has been created at \"${WORKSPACE_DIR}\"."
-echo "    Open it in theia to proceed."
+echo "--> A new empty workspace has been created at:"
+echo "      ${WORKSPACE_URL}"
