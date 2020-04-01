@@ -18,3 +18,4 @@ services:
     restart:          'no'
     volumes:
       -               '${HOST_PATH_TO_VOLUMES_ROOT}/server--theia/home/project:/home/project'
+      -               '${HOST_PATH_TO_VOLUMES_ROOT}/server--theia/home/theia/.theia:/home/theia/.theia'
