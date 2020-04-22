@@ -16,4 +16,5 @@ rm test/support/.gitkeep
 ceedling module:create[dummy] \
 > /dev/null
 
-echo "--> Workspace has been initialized with \"$( cat ${WORKSPACE_TEMPLATE_INDICATOR} )\" template."
+source /etc/talsen/strategy/init/common/git.bash
+source /etc/talsen/strategy/init/common/success-message.bash
