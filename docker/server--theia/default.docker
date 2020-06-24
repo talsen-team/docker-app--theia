@@ -1,8 +1,8 @@
-FROM theiaide/theia-full:1.0.0
+FROM theiaide/theia-full:1.2.0
 
-ENV APT_NET_CORE_SOURCE_URL=https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod
+ENV APT_NET_CORE_DEB_URL=https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
 ENV PLUGIN_OMNISHARP_NAME=omnisharp_theia_plugin
-ENV PLUGIN_OMNISHARP_VERSION=v0.0.5
+ENV PLUGIN_OMNISHARP_VERSION=v0.0.6
 ENV PLUGIN_OMNISHARP_URL=https://github.com/redhat-developer/omnisharp-theia-plugin/releases/download/${PLUGIN_OMNISHARP_VERSION}/omnisharp_theia_plugin.theia
 
 USER root
@@ -22,7 +22,7 @@ RUN apt-get update                                                              
                     software-properties-common                                     \
  && add-apt-repository universe --yes                                              \
  && wget --quiet                                                                   \
-    https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb \
+    ${APT_NET_CORE_DEB_URL}                                                        \
  && dpkg --install packages-microsoft-prod.deb                                     \
  && rm packages-microsoft-prod.deb                                                 \
  && apt-get update                                                                 \
@@ -48,13 +48,13 @@ USER root
 ENV LIB_GUNIT_VERSION=1.10.0
 ENV LIB_GUNIT_SRC_URL=https://github.com/google/googletest/archive/release-${LIB_GUNIT_VERSION}.tar.gz
 
-ENV LIB_CEEDLING_VERSION=v0.29.1
+ENV LIB_CEEDLING_VERSION=v0.30.0
 ENV LIB_CEEDLING_SRC_URL=https://github.com/ThrowTheSwitch/Ceedling/archive/${LIB_CEEDLING_VERSION}.tar.gz
 
-ENV LIB_UNITY_VERSION=v2.5.0
+ENV LIB_UNITY_VERSION=v2.5.1
 ENV LIB_UNITY_SRC_URL=https://github.com/ThrowTheSwitch/Unity/archive/${LIB_UNITY_VERSION}.tar.gz
 
-ENV LIB_CMOCK_VERSION=v2.5.0
+ENV LIB_CMOCK_VERSION=v2.5.2
 ENV LIB_CMOCK_SRC_URL=https://github.com/ThrowTheSwitch/CMock/archive/${LIB_CMOCK_VERSION}.tar.gz
 
 ENV TALSEN_ASSETS_DIR=/etc/talsen/assets
