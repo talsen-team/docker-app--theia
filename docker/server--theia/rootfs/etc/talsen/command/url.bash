@@ -8,7 +8,7 @@ source /etc/talsen/util/print-help-flag-text.bash
 
 source /etc/talsen/util/indicator/workspace.bash
 
-source /etc/talsen/config/workspace-base-url.bash
+source /etc/talsen/config/workspace-base-url.dojo.bash
 
 SCRIPT_NAME=$( detect_command_name ${0} )
 

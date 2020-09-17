@@ -8,7 +8,7 @@ source /etc/talsen/util/print-help-flag-text.bash
 
 source /etc/talsen/util/indicator/workspace-name.bash
 
-source /etc/talsen/config/workspace-base-url.bash
+source /etc/talsen/config/workspace-base-url.editor.bash
 
 ASSET_NEW_WORKSPACE=/etc/talsen/assets/new-workspace
 
