@@ -19,7 +19,7 @@ WORKSPACE_NAME_SUFFIX=$( date +%F )
 function print_help() {
     echo "Usage: dojo ${SCRIPT_NAME} <path>"
     echo "  <path>: The workspace path to clone from, the created workspace"
-    echo "          looks like the following: \"<name>-${WORKSPACE_NAME_SUFFIX}\""
+    echo "          looks like the following: \"<path>-${WORKSPACE_NAME_SUFFIX}\""
     print_help_flag_text
     echo "--> Clones a workspace from \"${CLONE_BASE_URL}\"."
 }
