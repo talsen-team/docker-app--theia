@@ -18,7 +18,7 @@ WORKSPACE_NAME_SUFFIX=$( date +%F )
 function print_help() {
     echo "Usage: dojo ${SCRIPT_NAME} <name>"
     echo "  <name>: Will have the current date appended, the full name"
-    echo "          looks like the following: \"<name>-${WORKSPACE_NAME_SUFFIX}\""
+    echo "          looks like the following: \"${WORKSPACE_NAME_SUFFIX}-<name>\""
     print_help_flag_text
     echo "--> Creates a new empty dojo workspace."
 }
@@ -31,8 +31,8 @@ then
 fi
 
 WORKSPACE_NAME=${1}
-WORKSPACE_DIR=/home/project/${WORKSPACE_NAME}-${WORKSPACE_NAME_SUFFIX}
-WORKSPACE_URL=${WORKSPACE_BASE_URL}${WORKSPACE_NAME}-${WORKSPACE_NAME_SUFFIX}
+WORKSPACE_DIR=/home/project/${WORKSPACE_NAME_SUFFIX}-${WORKSPACE_NAME}
+WORKSPACE_URL=${WORKSPACE_BASE_URL}${WORKSPACE_NAME_SUFFIX}-${WORKSPACE_NAME}
 
 if [ -d ${WORKSPACE_DIR} ];
 then
