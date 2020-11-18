@@ -1,9 +1,9 @@
-FROM theiaide/theia-full:1.2.0
+FROM theiaide/theia-full:1.7.0
 
 ENV APT_NET_CORE_DEB_URL=https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
 ENV PLUGIN_OMNISHARP_NAME=omnisharp_theia_plugin
 ENV PLUGIN_OMNISHARP_VERSION=v0.0.6
-ENV PLUGIN_OMNISHARP_URL=https://github.com/redhat-developer/omnisharp-theia-plugin/releases/download/${PLUGIN_OMNISHARP_VERSION}/omnisharp_theia_plugin.theia
+ENV PLUGIN_OMNISHARP_URL=https://github.com/redhat-developer/omnisharp-theia-plugin/releases/download/${PLUGIN_OMNISHARP_VERSION}/${PLUGIN_OMNISHARP_NAME}.theia
 
 USER root
 
