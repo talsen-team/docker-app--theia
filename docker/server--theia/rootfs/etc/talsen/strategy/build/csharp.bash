@@ -13,6 +13,6 @@ set +e
 mkdir --parents \
       .build
 
-dotnet test
+dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
 set -e

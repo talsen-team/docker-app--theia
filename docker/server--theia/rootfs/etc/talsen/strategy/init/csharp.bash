@@ -11,4 +11,6 @@ rsync --archive            \
         .
 
 source /etc/talsen/strategy/init/common/git.bash
+source /etc/talsen/strategy/init/common/delay.bash
+dotnet build > /dev/null
 source /etc/talsen/strategy/init/common/success-message.bash
