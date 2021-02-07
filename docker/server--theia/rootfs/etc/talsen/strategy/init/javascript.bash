@@ -4,7 +4,7 @@ set -euo pipefail
 
 source /etc/talsen/util/indicator/workspace-template.bash
 
-ASSET_TEMPLATE=/etc/talsen/assets/typescript-template
+ASSET_TEMPLATE=/etc/talsen/assets/javascript-template
 
 rsync --archive            \
         ${ASSET_TEMPLATE}/ \

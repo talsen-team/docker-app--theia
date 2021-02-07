@@ -4,6 +4,10 @@
 
 #include "Dummy.hpp"
 
+// Behavior Declaration:
+//   1. Given => Arrange / Pre-Condition
+//   2. When => Act / Execution
+//   3. Then => Assert / Post-Condition
 TEST( DummyBehavior, Given_ValidDummy_When_ValueIsRead_Then_CorrectValueIsProvided )
 {
     // Arrange
@@ -16,5 +20,5 @@ TEST( DummyBehavior, Given_ValidDummy_When_ValueIsRead_Then_CorrectValueIsProvid
 
     // Assert
     GTEST_ASSERT_EQ(EXPECTED_VALUE, result);
-    GTEST_FAIL();
+    GTEST_SKIP();
 }

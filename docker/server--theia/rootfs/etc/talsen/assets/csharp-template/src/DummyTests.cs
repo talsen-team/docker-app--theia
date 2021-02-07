@@ -6,6 +6,10 @@ namespace ApplicationTests
 {
     public class DummyTests
     {
+        // Behavior Declaration:
+        //   1. Given => Arrange / Pre-Condition
+        //   2. When => Act / Execution
+        //   3. Then => Assert / Post-Condition
         [Test]
         public void Given_ValidDummy_When_ValueIsRead_Then_CorrectValueIsProvided()
         {
